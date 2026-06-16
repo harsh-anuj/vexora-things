@@ -49,6 +49,12 @@ padding:15px 25px;
 border-radius:30px;
 font-size:16px;
 cursor:pointer;
+margin-top:15px;
+}
+
+#total{
+margin-top:30px;
+font-size:30px;
 }
 
 </style>
@@ -69,22 +75,14 @@ Vexora Things
 
 <div id="cart-items"></div>
 
-<div class="item">
-
 <h2 id="total"></h2>
-  <button onclick="clearCart()">
+
+<button onclick="clearCart()">
 Clear Cart
-  </button>
-
-<button>
-
-Proceed to Checkout
-
 </button>
 
 </div>
 
-</div>
 <script>
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -100,28 +98,47 @@ html += `
 
 <p>₹${product.price}</p>
 
+<button onclick="removeItem('${product.name}')">
+Remove
+</button>
+
 </div>
 `;
 
 });
 
 document.getElementById("cart-items").innerHTML = html;
+
 let total = 0;
 
 cart.forEach(product => {
-    total += product.price;
+
+total += product.price;
+
 });
 
 document.getElementById("total").innerHTML =
 "Total: ₹" + total;
-function clearCart() {
+
+function removeItem(name){
+
+cart = cart.filter(product => product.name !== name);
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+location.reload();
+
+}
+
+function clearCart(){
 
 localStorage.removeItem("cart");
 
 location.reload();
 
 }
-</script>
-</body>
 
+</script>
+
+</body>
 </html>
