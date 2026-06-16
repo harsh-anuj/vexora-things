@@ -33,14 +33,22 @@ font-size:28px;
 font-weight:bold;
 }
 
-.products{
-padding:80px 10%;
+.container{
+padding:60px 10%;
 }
 
-.products h1{
+h1{
 text-align:center;
-font-size:50px;
-margin-bottom:50px;
+margin-bottom:30px;
+}
+
+#search{
+width:100%;
+padding:15px;
+border-radius:30px;
+border:1px solid #ddd;
+margin-bottom:40px;
+font-size:16px;
 }
 
 .grid{
@@ -52,11 +60,11 @@ gap:30px;
 
 .card{
 background:white;
-padding:30px;
-border-radius:25px;
+padding:25px;
 width:300px;
-text-align:center;
+border-radius:25px;
 box-shadow:0 5px 20px rgba(0,0,0,.08);
+text-align:center;
 }
 
 .card img{
@@ -69,76 +77,100 @@ margin-top:20px;
 }
 
 button{
-margin-top:15px;
 background:#AFCBFF;
 border:none;
-padding:15px 25px;
-border-radius:30px;
-font-size:16px;
+padding:12px 20px;
+border-radius:20px;
 cursor:pointer;
+margin-top:15px;
+margin-right:10px;
 }
 
 </style>
 </head>
-
 <body>
 
 <nav>
-<div class="logo">Vexora Things</div>
+
+<div class="logo">
+Vexora Things
+</div>
+
 </nav>
 
-<section class="products">
+<div class="container">
 
 <h1>Shop</h1>
-  <input
+
+<input
+id="search"
 type="text"
 placeholder="Search products..."
-style="
-width:100%;
-max-width:500px;
-padding:15px;
-margin:30px auto;
-display:block;
-border-radius:30px;
-border:1px solid #ddd;
-font-size:16px;
-">
+onkeyup="displayProducts()"
+>
 
-<div class="grid">
+<div class="grid" id="products-container">
 
-<div class="card">
-<img src="https://via.placeholder.com/250">
-<h2>Product 1</h2>
-<p>Premium quality product</p>
-<h3>₹999</h3>
-<button onclick="addToCart('Product 1',999)">
-Add to Cart
-</button>
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/250">
-<h2>Product 2</h2>
-<p>Modern and elegant</p>
-<h3>₹1499</h3>
-<button onclick="addToCart('Product 2',1499)">
-Add to Cart
-</button>
-</div>
-
-<div class="card">
-<img src="https://via.placeholder.com/250">
-<h2>Product 3</h2>
-<p>Best seller collection</p>
-<h3>₹1999</h3>
-<button onclick="addToCart('Product 3',1999)">
-Add to Cart
-</button>
 </div>
 
 </div>
 
-</section>
+<script src="products.js"></script>
 <script src="script.js"></script>
+
+<script>
+
+function displayProducts(){
+
+let keyword =
+document.getElementById("search").value.toLowerCase();
+
+let html = "";
+
+products.forEach(product=>{
+
+if(product.name.toLowerCase().includes(keyword)){
+
+html += `
+
+<div class="card">
+
+<img src="${product.image}">
+
+<h2>${product.name}</h2>
+
+<p>${product.category}</p>
+
+<h3>₹${product.price}</h3>
+
+<button onclick="addToCart('${product.name}',${product.price})">
+
+Add to Cart
+
+</button>
+
+<button onclick="addToWishlist('${product.name}',${product.price})">
+
+❤️
+
+</button>
+
+</div>
+
+`;
+
+}
+
+});
+
+document.getElementById("products-container").innerHTML =
+html;
+
+}
+
+displayProducts();
+
+</script>
+
 </body>
 </html>
