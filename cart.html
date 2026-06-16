@@ -67,13 +67,7 @@ Vexora Things
 
 <h1>Your Cart</h1>
 
-<div class="item">
-
-<h2>Product 1</h2>
-
-<p>₹999</p>
-
-</div>
+<div id="cart-items"></div>
 
 <div class="item">
 
@@ -88,7 +82,29 @@ Proceed to Checkout
 </div>
 
 </div>
+<script>
 
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let html = "";
+
+cart.forEach(product => {
+
+html += `
+<div class="item">
+
+<h2>${product.name}</h2>
+
+<p>₹${product.price}</p>
+
+</div>
+`;
+
+});
+
+document.getElementById("cart-items").innerHTML = html;
+
+</script>
 </body>
 
 </html>
