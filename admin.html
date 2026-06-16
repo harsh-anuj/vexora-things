@@ -16,28 +16,34 @@ font-family:Arial,sans-serif;
 
 body{
 background:#F8F5F0;
-padding:50px 10%;
+padding:40px 10%;
+color:#333;
 }
 
 .container{
-background:white;
-padding:40px;
-border-radius:25px;
-box-shadow:0 5px 20px rgba(0,0,0,.08);
-max-width:800px;
+max-width:900px;
 margin:auto;
 }
 
-h1{
+.card{
+background:white;
+padding:30px;
+border-radius:25px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
 margin-bottom:30px;
+}
+
+h1{
+margin-bottom:20px;
 }
 
 input{
 width:100%;
 padding:15px;
-margin-bottom:20px;
-border-radius:15px;
+margin-bottom:15px;
 border:1px solid #ddd;
+border-radius:15px;
+font-size:16px;
 }
 
 button{
@@ -46,14 +52,26 @@ border:none;
 padding:15px 25px;
 border-radius:20px;
 cursor:pointer;
-margin-top:10px;
+font-size:16px;
 }
 
-.item{
-background:#F8F5F0;
+.product{
+background:white;
 padding:20px;
+border-radius:25px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+
+.product img{
+width:120px;
 border-radius:20px;
-margin-top:20px;
+margin-bottom:15px;
+}
+
+.delete-btn{
+background:#ffb3b3;
+margin-top:15px;
 }
 
 </style>
@@ -62,7 +80,11 @@ margin-top:20px;
 
 <div class="container">
 
+<div class="card">
+
 <h1>Admin Dashboard</h1>
+
+<h2 id="count"></h2>
 
 <input id="name" placeholder="Product Name">
 
@@ -75,6 +97,8 @@ margin-top:20px;
 <button onclick="addProduct()">
 Add Product
 </button>
+
+</div>
 
 <div id="products-list"></div>
 
@@ -89,24 +113,23 @@ displayProducts();
 
 function addProduct(){
 
-let name =
-document.getElementById("name").value;
+let product = {
 
-let price =
-Number(document.getElementById("price").value);
+name:
+document.getElementById("name").value,
 
-let category =
-document.getElementById("category").value;
+price:
+Number(document.getElementById("price").value),
 
-let image =
-document.getElementById("image").value;
+category:
+document.getElementById("category").value,
 
-products.push({
-name,
-price,
-category,
-image
-});
+image:
+document.getElementById("image").value
+
+};
+
+products.push(product);
 
 localStorage.setItem(
 "products",
@@ -138,7 +161,9 @@ products.forEach((product,index)=>{
 
 html += `
 
-<div class="item">
+<div class="product">
+
+<img src="${product.image}">
 
 <h2>${product.name}</h2>
 
@@ -146,7 +171,8 @@ html += `
 
 <p>${product.category}</p>
 
-<button onclick="deleteProduct(${index})">
+<button class="delete-btn"
+onclick="deleteProduct(${index})">
 
 Delete
 
@@ -158,9 +184,10 @@ Delete
 
 });
 
-document.getElementById(
-"products-list"
-).innerHTML = html;
+document.getElementById("products-list").innerHTML = html;
+
+document.getElementById("count").innerHTML =
+"Total Products: " + products.length;
 
 }
 
