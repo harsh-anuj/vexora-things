@@ -72,6 +72,9 @@ Vexora Things
 <div class="item">
 
 <h2>Total: ₹999</h2>
+  <button onclick="clearCart()">
+Clear Cart
+  </button>
 
 <button>
 
@@ -104,6 +107,13 @@ html += `
 
 document.getElementById("cart-items").innerHTML = html;
 
+function clearCart() {
+
+localStorage.removeItem("cart");
+
+location.reload();
+
+}
 </script>
 </body>
 
