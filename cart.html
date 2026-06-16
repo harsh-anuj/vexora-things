@@ -71,7 +71,7 @@ Vexora Things
 
 <div class="item">
 
-<h2>Total: ₹999</h2>
+<h2 id="total"></h2>
   <button onclick="clearCart()">
 Clear Cart
   </button>
@@ -106,7 +106,14 @@ html += `
 });
 
 document.getElementById("cart-items").innerHTML = html;
+let total = 0;
 
+cart.forEach(product => {
+    total += product.price;
+});
+
+document.getElementById("total").innerHTML =
+"Total: ₹" + total;
 function clearCart() {
 
 localStorage.removeItem("cart");
