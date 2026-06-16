@@ -33,10 +33,6 @@ box-shadow:0 5px 20px rgba(0,0,0,.08);
 margin-bottom:30px;
 }
 
-h1{
-margin-bottom:20px;
-}
-
 input{
 width:100%;
 padding:15px;
@@ -52,7 +48,16 @@ border:none;
 padding:15px 25px;
 border-radius:20px;
 cursor:pointer;
-font-size:16px;
+margin-right:10px;
+margin-top:10px;
+}
+
+.delete-btn{
+background:#ffb3b3;
+}
+
+.edit-btn{
+background:#ffe08a;
 }
 
 .product{
@@ -67,11 +72,6 @@ margin-bottom:20px;
 width:120px;
 border-radius:20px;
 margin-bottom:15px;
-}
-
-.delete-btn{
-background:#ffb3b3;
-margin-top:15px;
 }
 
 </style>
@@ -94,7 +94,7 @@ margin-top:15px;
 
 <input id="image" placeholder="Image URL">
 
-<button onclick="addProduct()">
+<button onclick="saveProduct()" id="saveBtn">
 Add Product
 </button>
 
@@ -109,34 +109,70 @@ Add Product
 let products =
 JSON.parse(localStorage.getItem("products")) || [];
 
+let editIndex = -1;
+
 displayProducts();
 
-function addProduct(){
+function saveProduct(){
 
 let product = {
 
-name:
-document.getElementById("name").value,
+name: document.getElementById("name").value,
 
-price:
-Number(document.getElementById("price").value),
+price: Number(document.getElementById("price").value),
 
-category:
-document.getElementById("category").value,
+category: document.getElementById("category").value,
 
-image:
-document.getElementById("image").value
+image: document.getElementById("image").value
 
 };
 
+if(editIndex === -1){
+
 products.push(product);
+
+}else{
+
+products[editIndex] = product;
+
+editIndex = -1;
+
+document.getElementById("saveBtn").innerHTML =
+"Add Product";
+
+}
 
 localStorage.setItem(
 "products",
 JSON.stringify(products)
 );
 
+clearInputs();
+
 displayProducts();
+
+}
+
+function editProduct(index){
+
+let product = products[index];
+
+document.getElementById("name").value =
+product.name;
+
+document.getElementById("price").value =
+product.price;
+
+document.getElementById("category").value =
+product.category;
+
+document.getElementById("image").value =
+product.image;
+
+editIndex = index;
+
+document.getElementById("saveBtn").innerHTML =
+"Update Product";
 
 }
 
@@ -150,6 +186,15 @@ JSON.stringify(products)
 );
 
 displayProducts();
+
+}
+
+function clearInputs(){
+
+document.getElementById("name").value = "";
+document.getElementById("price").value = "";
+document.getElementById("category").value = "";
+document.getElementById("image").value = "";
 
 }
 
@@ -171,6 +216,13 @@ html += `
 
 <p>${product.category}</p>
 
+<button class="edit-btn"
+onclick="editProduct(${index})">
+
+Edit
+
+</button>
+
 <button class="delete-btn"
 onclick="deleteProduct(${index})">
 
@@ -184,7 +236,8 @@ Delete
 
 });
 
-document.getElementById("products-list").innerHTML = html;
+document.getElementById("products-list").innerHTML =
+html;
 
 document.getElementById("count").innerHTML =
 "Total Products: " + products.length;
