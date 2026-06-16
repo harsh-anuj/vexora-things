@@ -1,4 +1,4 @@
-const products = [
+let products = JSON.parse(localStorage.getItem("products")) || [
 
 {
 name: "Premium Watch",
@@ -18,20 +18,6 @@ image: "https://via.placeholder.com/250"
 name: "Fashion Hoodie",
 price: 1499,
 category: "Fashion",
-image: "https://via.placeholder.com/250"
-},
-
-{
-name: "Smart Speaker",
-price: 3999,
-category: "Electronics",
-image: "https://via.placeholder.com/250"
-},
-
-{
-name: "Leather Wallet",
-price: 999,
-category: "Accessories",
 image: "https://via.placeholder.com/250"
 }
 
