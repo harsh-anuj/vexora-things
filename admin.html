@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Vexora Things</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#F8F5F0;
+padding:50px 10%;
+}
+
+.container{
+background:white;
+padding:40px;
+border-radius:25px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+max-width:700px;
+margin:auto;
+}
+
+h1{
+margin-bottom:30px;
+}
+
+input{
+width:100%;
+padding:15px;
+margin-bottom:20px;
+border-radius:15px;
+border:1px solid #ddd;
+}
+
+button{
+background:#AFCBFF;
+border:none;
+padding:15px 25px;
+border-radius:20px;
+cursor:pointer;
+font-size:16px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Admin Dashboard</h1>
+
+<input
+id="name"
+placeholder="Product Name">
+
+<input
+id="price"
+type="number"
+placeholder="Price">
+
+<input
+id="category"
+placeholder="Category">
+
+<input
+id="image"
+placeholder="Image URL">
+
+<button onclick="addProduct()">
+Add Product
+</button>
+
+</div>
+
+<script>
+
+function addProduct(){
+
+alert(
+"Admin dashboard UI created.\n\nNext phase will save products automatically."
+);
+
+}
+
+</script>
+
+</body>
+</html>
