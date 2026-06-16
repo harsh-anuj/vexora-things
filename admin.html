@@ -24,7 +24,7 @@ background:white;
 padding:40px;
 border-radius:25px;
 box-shadow:0 5px 20px rgba(0,0,0,.08);
-max-width:700px;
+max-width:800px;
 margin:auto;
 }
 
@@ -46,48 +46,121 @@ border:none;
 padding:15px 25px;
 border-radius:20px;
 cursor:pointer;
-font-size:16px;
+margin-top:10px;
+}
+
+.item{
+background:#F8F5F0;
+padding:20px;
+border-radius:20px;
+margin-top:20px;
 }
 
 </style>
 </head>
-
 <body>
 
 <div class="container">
 
 <h1>Admin Dashboard</h1>
 
-<input
-id="name"
-placeholder="Product Name">
+<input id="name" placeholder="Product Name">
 
-<input
-id="price"
-type="number"
-placeholder="Price">
+<input id="price" type="number" placeholder="Price">
 
-<input
-id="category"
-placeholder="Category">
+<input id="category" placeholder="Category">
 
-<input
-id="image"
-placeholder="Image URL">
+<input id="image" placeholder="Image URL">
 
 <button onclick="addProduct()">
 Add Product
 </button>
 
+<div id="products-list"></div>
+
 </div>
 
 <script>
 
+let products =
+JSON.parse(localStorage.getItem("products")) || [];
+
+displayProducts();
+
 function addProduct(){
 
-alert(
-"Admin dashboard UI created.\n\nNext phase will save products automatically."
+let name =
+document.getElementById("name").value;
+
+let price =
+Number(document.getElementById("price").value);
+
+let category =
+document.getElementById("category").value;
+
+let image =
+document.getElementById("image").value;
+
+products.push({
+name,
+price,
+category,
+image
+});
+
+localStorage.setItem(
+"products",
+JSON.stringify(products)
 );
+
+displayProducts();
+
+}
+
+function deleteProduct(index){
+
+products.splice(index,1);
+
+localStorage.setItem(
+"products",
+JSON.stringify(products)
+);
+
+displayProducts();
+
+}
+
+function displayProducts(){
+
+let html = "";
+
+products.forEach((product,index)=>{
+
+html += `
+
+<div class="item">
+
+<h2>${product.name}</h2>
+
+<p>₹${product.price}</p>
+
+<p>${product.category}</p>
+
+<button onclick="deleteProduct(${index})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"products-list"
+).innerHTML = html;
 
 }
 
